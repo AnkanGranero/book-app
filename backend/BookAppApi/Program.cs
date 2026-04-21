@@ -42,6 +42,25 @@ app.MapDelete("/api/books/{id}", (int id) =>
     return Results.NoContent();
 });
 
+app.MapPut("/api/books/{id}", (int id, Book updatedBook) =>
+{
+    if ( id != updatedBook.Id)
+    {
+        return Results.BadRequest("Id mismatch");
+    };
+
+    var index = books.FindIndex(b => b.Id == id);
+
+    if( index == -1)
+    {
+        return Results.NotFound();
+    }
+
+    books[index] = updatedBook;
+
+    return Results.Ok(updatedBook);
+});
+
 app.Run();
 
 
