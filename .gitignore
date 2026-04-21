@@ -1,0 +1,19 @@
+# Build
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Environment files
+.env
