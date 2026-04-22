@@ -1,67 +1,78 @@
+using BookAppApi.Data;
+using BookAppApi.Models;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseSqlite("Data Source=books.db"));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-/* app.UseHttpsRedirection(); */
-
-
-var books = new List<Book>
+using (var scope = app.Services.CreateScope())
 {
-   new Book(1, "Infinite Jest", "David Foster Wallace", new DateOnly(1996, 2, 1)),
-   new Book(2, "Mannen som förväxlade sin hustru med en hatt", "Oliver Sacks", new DateOnly(1985, 1, 1))
-};
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
+}
 
 app.MapGet("/", () => "Book API is running");
 
-app.MapGet("/api/books", () => books);
+app.MapGet("/api/books", async (AppDbContext db) =>
+await db.Books.ToListAsync());
 
-app.MapPost("/api/books", (Book newBook) =>
+app.MapPost("/api/books", async (Book newBook, AppDbContext db) =>
 {
-    books.Add(newBook);
+    db.Books.Add(newBook);
+    await db.SaveChangesAsync();
     return Results.Created($"/api/books/{newBook.Id}", newBook);
 });
 
-app.MapDelete("/api/books/{id}", (int id) =>
+app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db) =>
 {
-    var book = books.FirstOrDefault(b => b.Id == id );
-    if(book is null)
+    if (id != updatedBook.Id)
+    {
+        return Results.BadRequest("Id mismatch");
+    }
+    ;
+
+    var existingBook = await db.Books.FindAsync(id);
+
+    if (existingBook == null)
     {
         return Results.NotFound();
     }
-    books.Remove(book);
+
+    existingBook.Title = updatedBook.Title;
+    existingBook.Author = updatedBook.Author;
+    existingBook.PublishedDate = updatedBook.PublishedDate;
+
+    await db.SaveChangesAsync();
+
+    return Results.Ok(existingBook);
+});
+
+
+
+app.MapDelete("/api/books/{id}", async (int id, AppDbContext db) =>
+{
+    var book = await db.Books.FindAsync(id);
+    if (book is null)
+    {
+        return Results.NotFound();
+    }
+
+    db.Books.Remove(book);
+    await db.SaveChangesAsync();
+
     return Results.NoContent();
 });
 
-app.MapPut("/api/books/{id}", (int id, Book updatedBook) =>
-{
-    if ( id != updatedBook.Id)
-    {
-        return Results.BadRequest("Id mismatch");
-    };
-
-    var index = books.FindIndex(b => b.Id == id);
-
-    if( index == -1)
-    {
-        return Results.NotFound();
-    }
-
-    books[index] = updatedBook;
-
-    return Results.Ok(updatedBook);
-});
-
 app.Run();
-
-
-public record Book(int Id, string Title, string Author, DateOnly PublishedDate);

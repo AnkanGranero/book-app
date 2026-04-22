@@ -17,3 +17,8 @@ obj/
 
 # Environment files
 .env
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal
