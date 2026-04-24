@@ -1,6 +1,9 @@
 export interface Book {
-    id:number;
     title: string;
     author: string;
     publishedDate: string;
+}
+
+export interface RegisteredBook extends Book {
+    id: number
 }

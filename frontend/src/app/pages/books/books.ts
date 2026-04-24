@@ -1,8 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { Book } from '../../models/book';
+import { Book, RegisteredBook } from '../../models/book';
 import { BookService } from '../../services/books';
 import { BookForm } from '../../components/book-form/book-form';
-
 
 @Component({
   selector: 'app-books',
@@ -11,11 +10,11 @@ import { BookForm } from '../../components/book-form/book-form';
   styleUrl: './books.css',
 })
 export class Books implements OnInit {
-  books = signal<Book[]>([]);
-  selectedBook = signal<Book | null>(null);
+  books = signal<RegisteredBook[]>([]);
+  selectedBook = signal<RegisteredBook | null>(null);
   showForm = signal(false);
 
-  openBookForm(book?: Book | null) {
+  openBookForm(book?: RegisteredBook | null) {
     this.selectedBook.set(book ?? null);
     this.showForm.set(true);
   }
@@ -25,7 +24,7 @@ export class Books implements OnInit {
   }
   constructor(private bookService: BookService) {}
 
-  ngOnInit() {
+  loadBooks() {
     this.bookService.getBooks().subscribe({
       next: (data) => {
         this.books.set(data);
@@ -35,5 +34,8 @@ export class Books implements OnInit {
         console.error('Failed to load books', err);
       },
     });
+  }
+  ngOnInit() {
+    this.loadBooks();
   }
 }
