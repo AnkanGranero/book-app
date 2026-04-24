@@ -1,0 +1,27 @@
+<div class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" (click)="onClose()">
+  <div class="position-absolute top-50 start-50 translate-middle bg-white rounded p-4 shadow" style="width: 420px" (click)="$event.stopPropagation()">
+
+    <h5 class="mb-4">{{ book ? 'Edit book' : 'Add book' }}</h5>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Title</span>
+        <input class="form-control" [(ngModel)]="title" name="title" />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Author</span>
+        <input class="form-control" [(ngModel)]="author" name="author" />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text">Published</span>
+        <input class="form-control" type="date" [(ngModel)]="publishedDate" name="publishedDate" />
+      </div>
+
+      <div class="d-flex gap-2 justify-content-end">
+        <button type="button" class="btn btn-secondary" (click)="onClose()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+
+  </div>
+</div>
