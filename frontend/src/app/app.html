@@ -1,9 +1,19 @@
-<nav class="navbar navbar-dark bg-dark py-3 ">
+<nav class="navbar navbar-dark bg-dark py-3">
   <h1 class="navbar-brand mx-auto text-white mb-0 fs-1">Book App</h1>
-    <a routerLink="/login" class="btn btn-primary me-3">
-      Login
-    </a>
+  <a routerLink="/login" class="btn btn-primary me-3"> Login </a>
 </nav>
-<div class="container mt-4">
-  <router-outlet></router-outlet>
+<div class="position-relative">
+  @if (notification.message()) {
+    <div
+      class="alert position-absolute end-0 me-3 "
+      [class.alert-success]="notification.type() === 'success'"
+      [class.alert-danger]="notification.type() === 'error'"
+    >
+      {{ notification.message() }}
+    </div>
+  }
+
+  <div class="container pt-5">
+    <router-outlet></router-outlet>
+  </div>
 </div>
