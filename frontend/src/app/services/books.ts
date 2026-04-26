@@ -32,4 +32,11 @@ export class BookService {
 
     return this.http.put<RegisteredBook[]>(`${this.baseUrl}/books/${updatedBook.id}`,updatedBook, { headers });
   }
+  deleteBook(book: RegisteredBook) {
+        const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.delete<RegisteredBook[]>(`${this.baseUrl}/books/${book.id}`, { headers });
+  }
 }

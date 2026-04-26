@@ -4,7 +4,7 @@ import { Book, RegisteredBook } from '../../models/book';
 import { BookService } from '../../services/books';
 
 @Component({
-  selector: 'book-form',
+  selector: 'app-book-form',
   imports: [FormsModule],
   templateUrl: './book-form.html',
   styleUrl: './book-form.css',

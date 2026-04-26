@@ -8,11 +8,21 @@
         <p class="card-text">{{ book.author }}</p>
         <p class="card-text">{{ book.publishedDate }}</p>
         <button class="btn btn-primary align-self-end" (click)="openBookForm(book)">Edit</button>
+        <button class="btn btn-danger align-self-end" (click)="openConfirmDialog(book)">
+          Delete
+        </button>
       </div>
     </div>
   }
 </div>
 <button class="btn btn-primary mt-3" (click)="openBookForm()">Add book</button>
 @if (showForm()) {
-  <book-form [book]="selectedBook()" (close)="closeForm()" (saved)="loadBooks()" />
+  <app-book-form [book]="selectedBook()" (close)="closeBookForm()" (saved)="loadBooks()" />
+}
+@if (showConfirmDialog()) {
+  <app-confirm-dialog
+    [message]="confirmMessage()"
+    (confirm)="onConfirm()"
+    (decline)="onDecline()"
+  />
 }
