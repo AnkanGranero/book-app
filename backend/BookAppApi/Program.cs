@@ -67,19 +67,26 @@ using (var scope = app.Services.CreateScope())
 
 app.MapGet("/", () => "Book API is running");
 
-app.MapGet("/api/books", async (AppDbContext db) =>
-await db.Books.ToListAsync())
-.RequireAuthorization();
-
-app.MapPost("/api/books", async (Book newBook, AppDbContext db) =>
+app.MapGet("/api/books", async (AppDbContext db, HttpContext http) =>
 {
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    return await db.Books.Where(b => b.UserId == userId).ToListAsync();
+}).RequireAuthorization();
+
+app.MapPost("/api/books", async (Book newBook, AppDbContext db, HttpContext http) =>
+{
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    newBook.UserId = userId;
     db.Books.Add(newBook);
     await db.SaveChangesAsync();
     return Results.Created($"/api/books/{newBook.Id}", newBook);
 }).RequireAuthorization();
 
-app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db) =>
+app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db, HttpContext http) =>
 {
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+
     if (id != updatedBook.Id)
     {
         return Results.BadRequest("Id mismatch");
@@ -90,6 +97,11 @@ app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db) 
     if (existingBook == null)
     {
         return Results.NotFound();
+    }
+
+    if (existingBook.UserId != userId)
+    {
+        return Results.Forbid();
     }
 
     existingBook.Title = updatedBook.Title;
@@ -103,12 +115,17 @@ app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db) 
 
 
 
-app.MapDelete("/api/books/{id}", async (int id, AppDbContext db) =>
+app.MapDelete("/api/books/{id}", async (int id, AppDbContext db, HttpContext http) =>
 {
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
     var book = await db.Books.FindAsync(id);
     if (book is null)
     {
         return Results.NotFound();
+    }
+    if (book.UserId != userId)
+    {
+        return Results.Forbid();
     }
 
     db.Books.Remove(book);
@@ -119,6 +136,8 @@ app.MapDelete("/api/books/{id}", async (int id, AppDbContext db) =>
 
 app.MapPost("/api/register", async (User newUser, AppDbContext db) =>
 {
+    newUser.Username = newUser.Username.ToLower();
+
     var existingUser = await db.Users.FirstOrDefaultAsync(u => u.Username == newUser.Username);
 
     if (existingUser is not null)
@@ -134,7 +153,7 @@ app.MapPost("/api/register", async (User newUser, AppDbContext db) =>
 app.MapPost("/api/login", async (User loginUser, AppDbContext db) =>
 {
     var user = await db.Users.FirstOrDefaultAsync(u =>
-    u.Username == loginUser.Username &&
+    u.Username == loginUser.Username.ToLower() &&
     u.Password == loginUser.Password);
 
     if (user is null)

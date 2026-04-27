@@ -1,7 +1,13 @@
 <nav class="navbar navbar-dark bg-dark py-3">
   <h1 class="navbar-brand mx-auto text-white mb-0 fs-1">Book App</h1>
   <i (click)="toggleTheme()" [class]="themeIcon()"></i>
-  <a routerLink="/login" class="btn btn-primary mx-3"> Login </a>
+  @if(auth.isLoggedIn()) {
+    <a routerLink="/login" (click)="logout()" class="btn btn-primary mx-3"> Logout </a>
+
+  }
+  @else {
+    <a routerLink="/login" class="btn btn-primary mx-3"> Login </a>
+  }
 </nav>
 <div class="position-relative">
   @if (notification.message()) {
