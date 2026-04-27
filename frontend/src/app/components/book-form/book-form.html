@@ -1,7 +1,7 @@
 <div class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" (click)="onClose()">
-  <div class="position-absolute top-50 start-50 translate-middle bg-white rounded p-4 shadow" style="width: 420px" (click)="$event.stopPropagation()">
+  <div class="position-absolute top-50 start-50 translate-middle bg-body rounded p-4 shadow border border-secondary" style="width: 420px" (click)="$event.stopPropagation()">
 
-    <h5 class="mb-4">{{ book ? 'Edit book' : 'Add book' }}</h5>
+    <h5 class="mb-4 text-body">{{ book ? 'Edit book' : 'Add book' }}</h5>
 
     <form (ngSubmit)="onSubmit()">
       <div class="input-group mb-3">
