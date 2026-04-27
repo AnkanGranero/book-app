@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Book, RegisteredBook } from '../models/book';
 import { environment } from '../../environments/environment';
 
@@ -9,34 +9,15 @@ export class BookService {
   constructor(private http: HttpClient) {}
 
   getBooks() {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.get<RegisteredBook[]>(`${this.baseUrl}/books`, { headers });
+    return this.http.get<RegisteredBook[]>(`${this.baseUrl}/books`);
   }
-  addBook(book: Book){
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.post<Book[]>(`${this.baseUrl}/books`,book, { headers });
+  addBook(book: Book) {
+    return this.http.post<Book[]>(`${this.baseUrl}/books`, book);
   }
-  editBook(updatedBook: RegisteredBook){
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.put<RegisteredBook[]>(`${this.baseUrl}/books/${updatedBook.id}`,updatedBook, { headers });
+  editBook(updatedBook: RegisteredBook) {
+    return this.http.put<RegisteredBook[]>(`${this.baseUrl}/books/${updatedBook.id}`, updatedBook);
   }
   deleteBook(book: RegisteredBook) {
-        const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-    return this.http.delete<RegisteredBook[]>(`${this.baseUrl}/books/${book.id}`, { headers });
+    return this.http.delete<RegisteredBook[]>(`${this.baseUrl}/books/${book.id}`);
   }
 }

@@ -82,6 +82,8 @@ app.MapPost("/api/books", async (Book newBook, AppDbContext db, HttpContext http
     return Results.Created($"/api/books/{newBook.Id}", newBook);
 }).RequireAuthorization();
 
+
+
 app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db, HttpContext http) =>
 {
     var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
@@ -112,8 +114,6 @@ app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db, 
 
     return Results.Ok(existingBook);
 }).RequireAuthorization();
-
-
 
 app.MapDelete("/api/books/{id}", async (int id, AppDbContext db, HttpContext http) =>
 {
@@ -177,5 +177,64 @@ app.MapPost("/api/login", async (User loginUser, AppDbContext db) =>
     return Results.Ok(new { token = jwt });
 });
 
+app.MapGet("/api/quotes", async (AppDbContext db, HttpContext http) =>
+{
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    return await db.Quotes.Where(q => q.UserId == userId).ToListAsync();
+}).RequireAuthorization();
+
+app.MapPost("/api/quotes", async (Quote newQuote, AppDbContext db, HttpContext http) =>
+{
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    newQuote.UserId = userId;
+    db.Quotes.Add(newQuote);
+    await db.SaveChangesAsync();
+    return Results.Created($"/api/quotes/{newQuote.Id}", newQuote);
+}).RequireAuthorization();
+
+app.MapPut("/api/quotes/{id}", async (int id, Quote updatedQuote, AppDbContext db, HttpContext http) =>
+{
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+
+    if (id != updatedQuote.Id)
+    {
+        return Results.BadRequest("Id mismatch");
+    }
+    var existingQuote = await db.Quotes.FindAsync(id);
+    if (existingQuote == null)
+    {
+        return Results.NotFound();
+    }
+    if (existingQuote.UserId != userId)
+    {
+        return Results.Forbid();
+    }
+    existingQuote.Content = updatedQuote.Content;
+    existingQuote.Author = updatedQuote.Author;
+
+    await db.SaveChangesAsync();
+    return Results.Ok(existingQuote);
+
+}).RequireAuthorization();
+
+app.MapDelete("/api/quotes/{id}", async (int id, AppDbContext db, HttpContext http) =>
+{
+
+    var userId = int.Parse(http.User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+    var quote = await db.Quotes.FindAsync(id);
+    if (quote is null)
+    {
+        return Results.NotFound();
+    }
+    if (quote.UserId != userId)
+    {
+        return Results.Forbid();
+    }
+    db.Quotes.Remove(quote);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+
+}).RequireAuthorization();
 
 app.Run();
