@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'login',
   templateUrl: './login.html',
-  styleUrl: './login.css',
   imports: [FormsModule],
 })
 export class Login {

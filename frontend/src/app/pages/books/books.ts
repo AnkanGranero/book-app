@@ -3,12 +3,11 @@ import { Book, RegisteredBook } from '../../models/book';
 import { BookService } from '../../services/books';
 import { BookForm } from '../../components/book-form/book-form';
 import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
-
+import { EntityCard } from '../../components/entity-card/entity-card';
 @Component({
   selector: 'app-books',
-  imports: [BookForm, ConfirmDialog],
+  imports: [BookForm, ConfirmDialog, EntityCard],
   templateUrl: './books.html',
-  styleUrl: './books.css',
 })
 export class Books implements OnInit {
   books = signal<RegisteredBook[]>([]);

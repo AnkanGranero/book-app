@@ -4,7 +4,6 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
     selector: 'app-confirm-dialog',
     imports: [],
     templateUrl: './confirm-dialog.html',
-    styleUrl: './confirm-dialog.css',
 })
 export class ConfirmDialog {
   @Input() message = 'Are you sure?';

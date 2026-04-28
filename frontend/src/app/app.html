@@ -1,5 +1,7 @@
 <nav class="navbar navbar-dark bg-dark py-3">
   <h1 class="navbar-brand mx-auto text-white mb-0 fs-1">Book App</h1>
+  <a href="/quotes" class="text-white text-decoration-none mx-2"><i class="fa-solid fa-quote-left me-1"></i>My quotes</a>
+  <a href="/books" class="text-white text-decoration-none mx-2"><i class="fa-solid fa-book me-1"></i>My books</a>
   <i (click)="toggleTheme()" [class]="themeIcon()"></i>
   @if(auth.isLoggedIn()) {
     <a routerLink="/login" (click)="logout()" class="btn btn-primary mx-3"> Logout </a>
