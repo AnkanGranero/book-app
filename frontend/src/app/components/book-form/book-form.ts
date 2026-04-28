@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Book, RegisteredBook } from '../../models/book';
+import { RegisteredBook } from '../../models/book';
 import { BookService } from '../../services/books';
+import { ModalWrapper } from '../modal-wrapper/modal-wrapper';
 
 @Component({
   selector: 'app-book-form',
-  imports: [FormsModule],
+  imports: [FormsModule, ModalWrapper],
   templateUrl: './book-form.html',
-  styleUrl: './book-form.css',
 })
 export class BookForm implements OnInit {
   @Input() book: RegisteredBook | null = null;
@@ -45,9 +45,6 @@ export class BookForm implements OnInit {
         },
       });
     }
-  }
-  onClose() {
-    this.close.emit();
   }
   ngOnInit() {
     if (this.book) {

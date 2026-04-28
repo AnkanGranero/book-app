@@ -1,0 +1,22 @@
+<h2 class="mb-4">Quotes</h2>
+
+<div>
+  @for (quote of quotes(); track quote.id) {
+    <app-entity-card (edit)="openQuoteForm(quote)" (delete)="openConfirmDialog(quote)">
+      <p class="card-text text-body">{{ quote.content }}</p>
+      <p class="card-text text-body">{{ quote.author }}</p>
+    </app-entity-card>
+  }
+</div>
+
+<button class="btn btn-primary mt-3" (click)="openQuoteForm()">Add quote</button>
+@if (showForm()) {
+  <app-quote-form [quote]="selectedQuote()" (close)="closeQuoteForm()" (saved)="loadQuotes()" />
+}
+@if (showConfirmDialog()) {
+  <app-confirm-dialog
+    message="Are you sure you want to delete this quote"
+    (confirm)="onConfirm()"
+    (decline)="onDecline()"
+  />
+}
