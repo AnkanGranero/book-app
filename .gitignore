@@ -17,6 +17,7 @@ obj/
 
 # Environment files
 .env
+appsettings.Development.json
 
 # SQLite
 *.db
