@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+@media (min-width: 768px) {
+  .navbar-floating {
+    border-radius: 50rem;
+  }
+}
+
 :root {
 	--bright-blue: oklch(51.01% 0.274 263.83);
 	--electric-violet: oklch(53.18% 0.28 296.97);
