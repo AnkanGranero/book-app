@@ -17,7 +17,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseSqlite("Data Source=books.db"));
 
-var key = "super_secret_key_123!super_secret_key_123!";
+var key = builder.Configuration["JWT_SECRET"] ?? throw new InvalidOperationException("JWT_SECRET is not set");
 
 builder.Services.AddAuthentication(options =>
 {
