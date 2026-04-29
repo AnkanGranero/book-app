@@ -1,3 +1,15 @@
 .navbar-floating {
   max-width: 860px;
 }
+
+@media (max-width: 767px) {
+  .navbar-floating {
+    border-bottom: 1px solid white;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-floating {
+    border: 1px solid white;
+  }
+}
