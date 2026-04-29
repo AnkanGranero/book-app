@@ -1,6 +1,8 @@
 <div class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" (click)="close.emit()">
-  <div class="position-absolute top-50 start-50 translate-middle bg-body rounded p-4 shadow border border-white"
-       style="width: 420px" (click)="$event.stopPropagation()">
+  <div
+    class="modal-wrapper position-absolute start-50 translate-middle bg-body rounded p-4 shadow border border-white"
+    (click)="$event.stopPropagation()"
+  >
     <ng-content />
   </div>
 </div>

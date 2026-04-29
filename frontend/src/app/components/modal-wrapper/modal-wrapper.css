@@ -1,0 +1,10 @@
+.modal-wrapper {
+  max-width: 420px;
+  width: calc(100% - 2rem);
+  top: 50%;
+}
+@media (min-width: 768px) {
+  .modal-wrapper {
+    top: 25%;
+  }
+}
