@@ -1,6 +1,6 @@
-<h2 class="mb-4">Quotes</h2>
+<h2 class="mb-4 text-center fs-1">Quotes</h2>
 
-<div>
+<div class="card-grid">
   @for (quote of quotes(); track quote.id) {
     <app-entity-card (edit)="openQuoteForm(quote)" (delete)="openConfirmDialog(quote)">
       <p class="card-text text-body">{{ quote.content }}</p>
@@ -15,7 +15,7 @@
 }
 @if (showConfirmDialog()) {
   <app-confirm-dialog
-    message="Are you sure you want to delete this quote"
+    [message]="confirmMessage()"
     (confirm)="onConfirm()"
     (decline)="onDecline()"
   />

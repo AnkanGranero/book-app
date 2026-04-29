@@ -1,20 +1,52 @@
-<nav class="navbar navbar-dark bg-dark py-3">
-  <h1 class="navbar-brand mx-auto text-white mb-0 fs-1">Book App</h1>
-  <a href="/quotes" class="text-white text-decoration-none mx-2"><i class="fa-solid fa-quote-left me-1"></i>My quotes</a>
-  <a href="/books" class="text-white text-decoration-none mx-2"><i class="fa-solid fa-book me-1"></i>My books</a>
-  <i (click)="toggleTheme()" [class]="themeIcon()"></i>
-  @if(auth.isLoggedIn()) {
-    <a routerLink="/login" (click)="logout()" class="btn btn-primary mx-3"> Logout </a>
+<div class="d-flex justify-content-center px-0 px-md-3 pt-md-3">
+  <nav
+    class="navbar navbar-expand-md navbar-floating shadow px-4 py-3 px-md-5 w-100 navbar-floating"
+  >
+    <a class="navbar-brand fw-bold fs-5">Bookmarked</a>
 
-  }
-  @else {
-    <a routerLink="/login" class="btn btn-primary mx-3"> Login </a>
-  }
-</nav>
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navMenu"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mt-2 mt-md-0 mb-1 mb-md-0">
+        <li class="nav-item">
+          <a href="/quotes" class="nav-link"
+            ><i class="fa-solid fa-quote-left me-2"></i>My quotes</a
+          >
+        </li>
+        <li class="nav-item">
+          <a href="/books" class="nav-link"><i class="fa-solid fa-book me-2"></i>My books</a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="toggleTheme()">
+            <i [class]="themeIcon()"></i>
+            Theme
+          </button>
+        </li>
+      </ul>
+
+      <div>
+        @if (auth.isLoggedIn()) {
+          <a routerLink="/login" (click)="logout()" class="btn btn-primary btn rounded-pill px-3"
+            >Logout</a
+          >
+        } @else {
+          <a routerLink="/login" class="btn btn-primary btn rounded-pill px-3">Login</a>
+        }
+      </div>
+    </div>
+  </nav>
+</div>
 <div class="position-relative">
   @if (notification.message()) {
     <div
-      class="alert position-absolute end-0 me-3"
+      class="alert notification"
       [class.alert-success]="notification.type() === 'success'"
       [class.alert-danger]="notification.type() === 'error'"
     >

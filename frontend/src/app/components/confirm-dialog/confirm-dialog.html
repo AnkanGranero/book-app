@@ -2,10 +2,15 @@
   class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-50"
   (click)="decline.emit()"
 >
-  <div class="bg-body rounded p-4 position-relative border border-secondary" (click)="$event.stopPropagation()">
+  <div
+    class="bg-body rounded p-4 position-relative border border-white confirm-dialog mx-3"
+    (click)="$event.stopPropagation()"
+  >
     <button class="btn-close position-absolute top-0 end-0 m-2" (click)="decline.emit()"></button>
-    <p class="text-body">{{ message }}</p>
-    <button class="btn btn-danger me-2" (click)="confirm.emit()">Yes</button>
-    <button class="btn btn-secondary" (click)="decline.emit()">No</button>
+    <p class="text-body my-4">{{ message }}</p>
+    <div class="d-flex justify-content-center gap-3 w-100">
+      <button class="btn btn-danger flex-grow-1" (click)="confirm.emit()">Yes</button>
+      <button class="btn btn-secondary flex-grow-1" (click)="decline.emit()">No</button>
+    </div>
   </div>
 </div>

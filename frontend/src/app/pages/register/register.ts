@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-register',
   imports: [FormsModule, RouterLink],
   templateUrl: './register.html',
+  styleUrl: './register.css'
 })
 export class Register {
   username = '';
@@ -31,8 +32,8 @@ export class Register {
         this.notification.showSuccess('Account created successfully');
         this.router.navigate(['/login']);
       },
-      error: () => {
-        this.notification.showError('Username already exists');
+      error: (err) => {
+        this.notification.showError(err.error ?? 'Registration failed');
       },
     });
   }

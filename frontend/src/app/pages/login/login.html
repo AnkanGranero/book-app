@@ -1,13 +1,15 @@
-<h2 class="mb-3">Login</h2>
-<form (ngSubmit)="onSubmit()">
-  <div>
+<h2 class="mb-3 text-center">Login</h2>
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm" [class.was-validated]="loginForm.submitted" class="login-form mx-auto mt-5">
+  <div class="mb-3">
     <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" [(ngModel)]="username" name="username" />
+    <input type="text" class="form-control" [(ngModel)]="username" name="username" required />
+    <div class="invalid-feedback">Username is required</div>
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+    <input type="password" class="form-control" [(ngModel)]="password" name="password" required />
+    <div class="invalid-feedback">Password is required</div>
   </div>
-  <button type="submit" class="btn btn-primary">Login</button>
-  <a href="/register">Register</a>
+  <button type="submit" class="btn btn-primary me-3">Login</button>
+  <a href="/register" class="text-decoration-none">Register</a>
 </form>

@@ -136,6 +136,16 @@ app.MapDelete("/api/books/{id}", async (int id, AppDbContext db, HttpContext htt
 
 app.MapPost("/api/register", async (User newUser, AppDbContext db) =>
 {
+    if (string.IsNullOrWhiteSpace(newUser.Username) || string.IsNullOrWhiteSpace(newUser.Password))
+    {
+        return Results.BadRequest("Username and password are required");
+    }
+
+    if (newUser.Username.Length < 3 || newUser.Password.Length < 6)
+    {
+        return Results.BadRequest("Username must be at least 3 characters and password at least 6");
+    }
+
     newUser.Username = newUser.Username.ToLower();
 
     var existingUser = await db.Users.FirstOrDefaultAsync(u => u.Username == newUser.Username);

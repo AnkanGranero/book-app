@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { RegisteredQuote } from '../../models/quote';
 import { QuoteService } from '../../services/quotes';
 import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
@@ -16,6 +16,7 @@ export class Quotes implements OnInit {
   showForm = signal(false);
   showConfirmDialog = signal(false);
   quoteToDelete = signal<RegisteredQuote | null>(null);
+  confirmMessage = computed(()=> `Are you sure you want to delete the quote: '${this.quoteToDelete()?.content}'`)
 
   onConfirm() {
     const quote = this.quoteToDelete();
