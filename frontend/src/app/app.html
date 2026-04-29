@@ -1,25 +1,41 @@
 <div class="d-flex justify-content-center px-0 px-md-3 pt-md-3">
-  <nav class="navbar navbar-expand-md navbar-floating shadow px-4 py-2 w-100" style="max-width: 860px;">
+  <nav
+    class="navbar navbar-expand-md navbar-floating shadow px-4 py-3 px-md-5 w-100 navbar-floating"
+  >
     <a class="navbar-brand fw-bold fs-5">Bookmarked</a>
 
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navMenu"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav me-auto mt-2 mt-md-0">
+      <ul class="navbar-nav me-auto mt-2 mt-md-0 mb-1 mb-md-0">
         <li class="nav-item">
-          <a href="/quotes" class="nav-link"><i class="fa-solid fa-quote-left me-1"></i>My quotes</a>
+          <a href="/quotes" class="nav-link"
+            ><i class="fa-solid fa-quote-left me-2"></i>My quotes</a
+          >
         </li>
         <li class="nav-item">
-          <a href="/books" class="nav-link"><i class="fa-solid fa-book me-1"></i>My books</a>
+          <a href="/books" class="nav-link"><i class="fa-solid fa-book me-2"></i>My books</a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" (click)="toggleTheme()">
+            <i  [class]="themeIcon()"></i>
+            Theme
+          </button>
         </li>
       </ul>
 
-      <div class="d-flex align-items-center gap-3">
-        <i (click)="toggleTheme()" [class]="themeIcon()" style="cursor:pointer"></i>
-        @if(auth.isLoggedIn()) {
-          <a routerLink="/login" (click)="logout()" class="btn btn-primary btn-sm rounded-pill px-3">Logout</a>
+      <div>
+        @if (auth.isLoggedIn()) {
+          <a routerLink="/login" (click)="logout()" class="btn btn-primary btn rounded-pill px-3"
+            >Logout</a
+          >
         } @else {
           <a routerLink="/login" class="btn btn-primary btn-sm rounded-pill px-3">Login</a>
         }
