@@ -8,6 +8,7 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-register',
   imports: [FormsModule, RouterLink],
   templateUrl: './register.html',
+  styleUrl: './register.css'
 })
 export class Register {
   username = '';
