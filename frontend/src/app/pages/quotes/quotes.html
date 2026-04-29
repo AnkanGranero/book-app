@@ -1,6 +1,6 @@
 <h2 class="mb-4 text-center fs-1">Quotes</h2>
 
-<div>
+<div class="card-grid">
   @for (quote of quotes(); track quote.id) {
     <app-entity-card (edit)="openQuoteForm(quote)" (delete)="openConfirmDialog(quote)">
       <p class="card-text text-body">{{ quote.content }}</p>
