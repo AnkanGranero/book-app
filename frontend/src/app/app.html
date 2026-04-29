@@ -46,7 +46,7 @@
 <div class="position-relative">
   @if (notification.message()) {
     <div
-      class="alert position-absolute end-0 me-3"
+      class="alert notification"
       [class.alert-success]="notification.type() === 'success'"
       [class.alert-danger]="notification.type() === 'error'"
     >

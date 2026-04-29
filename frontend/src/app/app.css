@@ -12,4 +12,12 @@
   .navbar-floating {
     border: 1px solid white;
   }
+} 
+.notification {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  z-index: 1000;
 }
