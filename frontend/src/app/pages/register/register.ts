@@ -31,8 +31,8 @@ export class Register {
         this.notification.showSuccess('Account created successfully');
         this.router.navigate(['/login']);
       },
-      error: () => {
-        this.notification.showError('Username already exists');
+      error: (err) => {
+        this.notification.showError(err.error ?? 'Registration failed');
       },
     });
   }

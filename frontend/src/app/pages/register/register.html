@@ -1,16 +1,19 @@
 <h2 class="mb-3">Register</h2>
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" #registerForm="ngForm" [class.was-validated]="registerForm.submitted">
   <div class="mb-3">
     <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" [(ngModel)]="username" name="username" />
+    <input type="text" class="form-control" [(ngModel)]="username" name="username" required />
+    <div class="invalid-feedback">Username is required</div>
   </div>
   <div class="mb-3">
     <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" [(ngModel)]="password" name="password" />
+    <input type="password" class="form-control" [(ngModel)]="password" name="password" required />
+    <div class="invalid-feedback">Password is required</div>
   </div>
   <div class="mb-3">
     <label for="confirmPassword" class="form-label">Confirm password</label>
-    <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" />
+    <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+    <div class="invalid-feedback">Please confirm your password</div>
   </div>
   <button type="submit" class="btn btn-primary">Register</button>
   <a routerLink="/login" class="btn btn-secondary ms-3">Back to login</a>

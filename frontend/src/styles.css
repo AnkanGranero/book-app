@@ -34,6 +34,9 @@
 
   --pill-accent: var(--bright-blue);
 }
+html {
+  height: 100%;
+}
 
 body {
   font-family:
@@ -51,7 +54,7 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
+  height: 100%;
   margin: 0;
 }
 

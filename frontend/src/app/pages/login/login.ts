@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   selector: 'login',
   templateUrl: './login.html',
   imports: [FormsModule],
+  styleUrl: './login.css',
 })
 export class Login {
   username = '';
