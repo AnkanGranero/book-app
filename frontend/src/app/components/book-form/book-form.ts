@@ -18,7 +18,10 @@ export class BookForm implements OnInit {
   title = '';
   author = '';
   publishedDate = '';
+  isSubmitting = false;
   onSubmit() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
     const payload = {
       title: this.title,
       author: this.author,
@@ -32,6 +35,7 @@ export class BookForm implements OnInit {
         },
         error: (err) => {
           console.error('failed to edit book', err);
+          this.isSubmitting = false;
         },
       });
     } else {
@@ -42,6 +46,7 @@ export class BookForm implements OnInit {
         },
         error: (err) => {
           console.error('failed to add book', err);
+          this.isSubmitting = false;
         },
       });
     }
