@@ -19,7 +19,10 @@ export class QuoteForm implements OnInit {
   constructor(private quoteService: QuoteService) {}
   content = '';
   author = '';
+  isSubmitting = false;
   onSubmit() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
     const payload = {
       content: this.content,
       author: this.author,
@@ -32,6 +35,7 @@ export class QuoteForm implements OnInit {
         },
         error: (err) => {
           console.error('failed to edit quote', err);
+          this.isSubmitting = false;
         },
       });
     } else {
@@ -42,6 +46,7 @@ export class QuoteForm implements OnInit {
         },
         error: (err) => {
           console.error('failed to add quote', err);
+          this.isSubmitting = false;
         },
       });
     }
