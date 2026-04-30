@@ -17,7 +17,7 @@ export class BookForm implements OnInit {
   constructor(private bookService: BookService) {}
   title = '';
   author = '';
-  publishedDate = '';
+  publishedYear: number | null = null;
   isSubmitting = false;
   onSubmit() {
     if (this.isSubmitting) return;
@@ -25,7 +25,7 @@ export class BookForm implements OnInit {
     const payload = {
       title: this.title,
       author: this.author,
-      publishedDate: this.publishedDate,
+      publishedYear: this.publishedYear,
     };
     if (this.book) {
       this.bookService.editBook({ ...payload, id: this.book.id }).subscribe({
@@ -53,10 +53,10 @@ export class BookForm implements OnInit {
   }
   ngOnInit() {
     if (this.book) {
-      const { title, author, publishedDate } = this.book;
+      const { title, author, publishedYear } = this.book;
       this.title = title;
       this.author = author;
-      this.publishedDate = publishedDate;
+      this.publishedYear = publishedYear;
     }
   }
 }

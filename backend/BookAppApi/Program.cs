@@ -108,7 +108,7 @@ app.MapPut("/api/books/{id}", async (int id, Book updatedBook, AppDbContext db, 
 
     existingBook.Title = updatedBook.Title;
     existingBook.Author = updatedBook.Author;
-    existingBook.PublishedDate = updatedBook.PublishedDate;
+    existingBook.PublishedYear = updatedBook.PublishedYear;
 
     await db.SaveChangesAsync();
 
